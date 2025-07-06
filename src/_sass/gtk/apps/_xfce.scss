@@ -192,11 +192,54 @@ window#whiskermenu-window {
 .thunar {
   toolbar { border-bottom: 1px solid $divider; }
 
+  headerbar.titlebar toolbar {
+    border: none;
+    padding: 0;
+    margin: 0;
+
+    &:not(.inline-toolbar):not(.osd) {
+      scale,
+      entry,
+      spinbutton,
+      button,
+      stackswitcher {
+        margin: 0 $space-size / 2;
+      }
+
+      button {
+        min-height: 0;
+        min-width: 0;
+      }
+
+      switch { margin: $space-size $space-size / 2; }
+    }
+  }
+
   .standard-view.frame {
     border: none;
 
-    > .view {
-      border-radius: $corner-radius;
+    widget.view {
+      padding: $space-size; // Not work ?
+      border-radius: 3px;
+    }
+
+    .view {
+      &:hover { color: $text; }
+
+      &:selected {
+        color: on($primary);
+        background: $primary;
+      }
+    }
+  }
+
+  paned paned paned > notebook.frame {
+    border: none;
+    border-radius: 0;
+
+    .standard-view.frame > widget.view {
+      border-radius: 0;
+      box-shadow: inset 0 0 0 3px rgba($primary, 0.25);
     }
   }
 

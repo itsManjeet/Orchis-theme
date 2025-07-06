@@ -22,7 +22,7 @@
     color: white;
     background-color: rgba(black, 0.75);
     text-align: center;
-    padding: 0.4em 0.5em;
+    padding: 0.25em 0.4em;
   }
 
   .notification-badge {
@@ -33,7 +33,7 @@
     box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.25);
     border-radius: $circular-radius;
     margin: 2px 3px 5px;
-    padding: 3px;
+    padding: 0.2em 0.4em;
     font-weight: bold;
     text-align: center;
   }
@@ -273,8 +273,9 @@
     }
 
     .app-grid-running-dot {
-      margin-bottom: 6px !important;
+      margin-bottom: 3px !important;
       margin-top: 0 !important;
+      offset-y: 0 !important;
     }
 
     StWidget.focused .app-grid-running-dot {
@@ -384,9 +385,29 @@ $dash_to_panel_item_radius: 5px;
     border-radius: 0 !important;
   }
 
-  .show-apps .overview-icon  {
+  .overview-tile {
+    padding: 0 !important;
     margin: 0 !important;
-    border-radius: $dash_to_panel_item_radius !important;
+    border: none !important;
+
+    .overview-icon {
+      padding: 0 !important;
+      margin: 0 !important;
+      border: none !important;
+    }
+  }
+
+  .show-apps {
+    color: on($panel) !important;
+    border-radius: 0 !important;
+
+    &:hover {
+      background: on($panel, divider) !important;
+    }
+
+    &:active {
+      background: on($panel, track) !important;
+    }
   }
 
   .panel-button {
@@ -398,7 +419,7 @@ $dash_to_panel_item_radius: 5px;
 
   .arcmenu-menu-button {
     border-radius: $dash_to_panel_item_radius !important;
-    padding: 8px 6px !important;
+    padding: 2px 4px !important;
   }
 }
 
@@ -428,6 +449,7 @@ $dash_to_panel_menu_radius: 12px;
 #dashtopanelPreviewScrollview {
   padding: $dash_to_panel_menu_radius 0 !important;
   border-radius: $dash_to_panel_menu_radius !important;
+  background: #0c0c0c !important;
 }
 
 //

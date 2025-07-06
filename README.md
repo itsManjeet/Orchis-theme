@@ -19,7 +19,7 @@ Based on nana-4 -- [materia-theme](https://github.com/nana-4/materia-theme)
 
 ## Donate
 
-If you like my project, you can buy me a coffee:
+If you like this project, consider supporting it with a coffee:
 
 <span class="paypal"><a href="https://www.paypal.me/vinceliuice" title="Donate to this project using Paypal"><img src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-100px.png" alt="PayPal donate button" /></a></span>
 
@@ -33,7 +33,8 @@ Run the following commands in the terminal:
 ./install.sh
 ```
 
-> Tip: `./install.sh` allows the following options:
+> [!TIP]
+> `./install.sh` allows the following options:
 
 ```
 OPTIONS:
@@ -44,14 +45,19 @@ OPTIONS:
   -c, --color VARIANT     Specify color variant(s) [standard|light|dark] (Default: All variants)s)
   -s, --size VARIANT      Specify size variant [standard|compact] (Default: All variants)
 
+  -i, --icon VARIANT      Specify icon variant(s) for shell panel activities button
+                          [default|apple|simple|gnome|ubuntu|arch|manjaro|fedora|debian|void|opensuse|popos|mxlinux|zorin|endeavouros|tux|nixos|gentoo|budgie|solus]
+                          (Default: ChromeOS style)
+
   -l, --libadwaita        Link installed Orchis gtk-4.0 theme to config folder for all libadwaita app use Orchis theme
+  -f, --fixed             Fixed accent(blue) color for gnome-shell >= 47 libadwaita theme
 
   --tweaks                Specify versions for tweaks [solid|compact|black|primary|macos|submenu|(nord/dracula)] (Options can mix)
                           1. solid              No transparency panel variant
                           2. compact            No floating panel variant
                           3. black              Full black variant
                           4. primary            Change radio icon checked color to primary theme color (Default is Green)
-                          5. macos              Change window buttons to MacOS style
+                          5. macos              Change window buttons to macOS style
                           6. submenu            Set normal submenus color contrast (dark submenu style on dark version)
                           7. [nord|dracula]     Nord/dracula colorscheme themes (nord and dracula can not mix use!)
                           8. dock               Fix style for 'dash-to-dock' or 'ubuntu-dock' extension
@@ -63,11 +69,14 @@ OPTIONS:
                           ...
                           13. 15px
 
-  --shell                 install gnome-shell version [38|40|42|44]
-                          1. 38                 Gnome-shell version < 40.0
+  --shell                 install gnome-shell version [38|40|42|44|46] (Without this option script will detect shell version and install the right theme)
+                          1. 38                 Gnome-shell version <= 38.0
                           2. 40                 Gnome-shell version = 40.0
                           3. 42                 Gnome-shell version = 42.0
-                          4. 44                 Gnome-shell version >= 44.0
+                          4. 44                 Gnome-shell version = 44.0
+                          5. 46                 Gnome-shell version = 46.0
+                          6. 47                 Gnome-shell version = 47.0
+                          7. 48                 Gnome-shell version = 48.0
 
   -r, --remove,
   -u, --uninstall         Uninstall/Remove installed themes
@@ -101,21 +110,11 @@ if you want install other theme version for libadwaita you can run like:
 
 and so on ... 
 
-### Flatpak Installation
+### Fix for Flatpak
 
-Automatically install your host GTK+ 3.0 theme as a Flatpak. Use this:
-
-- [stylepak](https://github.com/refi64/stylepak)
-
-Also if you want to use this theme on a GTK+ 4.0 flatpak app, you can give the permission to access this file
-
-local:
-```
-flatpak override --user --filesystem=xdg-config/gtk-4.0
+```sh
+sudo flatpak override --filesystem=xdg-config/gtk-3.0 && sudo flatpak override --filesystem=xdg-config/gtk-4.0
 ```
 
-global:
-```
-flatpak override --filesystem=xdg-config/gtk-4.0
-```
+If you use flatpak apps, you can run this to fix theme issue.
 

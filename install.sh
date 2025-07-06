@@ -15,17 +15,22 @@ OPTIONS:
   -c, --color VARIANT     Specify color variant(s) [standard|light|dark] (Default: All variants)s)
   -s, --size VARIANT      Specify size variant [standard|compact] (Default: All variants)
 
+  -i, --icon VARIANT      Specify icon variant(s) for shell panel activities button
+                          [default|apple|simple|gnome|ubuntu|arch|manjaro|fedora|debian|void|opensuse|popos|mxlinux|zorin|endeavouros|tux|nixos|gentoo|budgie|solus]
+                          (Default: ChromeOS style)
+
   -l, --libadwaita        Link installed Orchis gtk-4.0 theme to config folder for all libadwaita app use Orchis theme
+  -f, --fixed             Fixed accent(blue) color for gnome-shell >= 47 libadwaita theme
 
   --tweaks                Specify versions for tweaks [solid|compact|black|primary|macos|submenu|(nord/dracula)] (Options can mix)
                           1. solid              No transparency panel variant
                           2. compact            No floating panel variant
                           3. black              Full black variant
                           4. primary            Change radio icon checked color to primary theme color (Default is Green)
-                          5. macos              Change window buttons to MacOS style
+                          5. macos              Change window buttons to macOS style
                           6. submenu            Set normal submenus color contrast (dark submenu style on dark version)
                           7. [nord|dracula]     Nord/dracula colorscheme themes (nord and dracula can not mix use!)
-                          8. dock                Fix style for 'dash-to-dock' or 'ubuntu-dock' extension
+                          8. dock               Fix style for 'dash-to-dock' or 'ubuntu-dock' extension
 
   --round                 Change theme round corner border-radius [Input the px value you want] (Suggested: 2px < value < 16px)
                           1. 3px
@@ -34,12 +39,14 @@ OPTIONS:
                           ...
                           13. 15px
 
-  --shell                 install gnome-shell version [38|40|42|44|46]
-                          1. 38                 Gnome-shell version < 40.0
+  --shell                 install gnome-shell version [38|40|42|44|46] (Without this option script will detect shell version and install the right theme)
+                          1. 38                 Gnome-shell version <= 38.0
                           2. 40                 Gnome-shell version = 40.0
                           3. 42                 Gnome-shell version = 42.0
                           4. 44                 Gnome-shell version = 44.0
-                          4. 46                 Gnome-shell version >= 46.0
+                          5. 46                 Gnome-shell version = 46.0
+                          6. 47                 Gnome-shell version = 47.0
+                          7. 48                 Gnome-shell version = 48.0
 
   -r, --remove,
   -u, --uninstall         Uninstall/Remove installed themes
@@ -75,6 +82,10 @@ while [[ "$#" -gt 0 ]]; do
       libadwaita="true"
       shift
       ;;
+    -f|--fixed)
+      fixed="true"
+      shift
+      ;;
     --round)
       round="true"
       corner="$2"
@@ -103,6 +114,14 @@ while [[ "$#" -gt 0 ]]; do
             ;;
           46)
             shell="46"
+            shift
+            ;;
+          47)
+            shell="47"
+            shift
+            ;;
+          48)
+            shell="48"
             shift
             ;;
           -*)
@@ -142,7 +161,7 @@ while [[ "$#" -gt 0 ]]; do
             ;;
           macos)
             macstyle="true"
-            echo -e "Install MacOS style window button version ..."
+            echo -e "Install macOS style window button version ..."
             shift
             ;;
           submenu)
@@ -287,6 +306,103 @@ while [[ "$#" -gt 0 ]]; do
         esac
       done
       ;;
+    -i|--icon)
+      activities='icon'
+      shift
+      for icons in "$@"; do
+        case "$icons" in
+          default)
+            icon='-default'
+            shift
+            ;;
+          apple)
+            icon='-apple'
+            shift
+            ;;
+          simple)
+            icon='-simple'
+            shift
+            ;;
+          gnome)
+            icon='-gnome'
+            shift
+            ;;
+          ubuntu)
+            icon='-ubuntu'
+            shift
+            ;;
+          arch)
+            icon='-arch'
+            shift
+            ;;
+          manjaro)
+            icon='-manjaro'
+            shift
+            ;;
+          fedora)
+            icon='-fedora'
+            shift
+            ;;
+          debian)
+            icon='-debian'
+            shift
+            ;;
+          void)
+            icon='-void'
+            shift
+            ;;
+          opensuse)
+            icon='-opensuse'
+            shift
+            ;;
+          popos)
+            icon='-popos'
+            shift
+            ;;
+          mxlinux)
+            icon='-mxlinux'
+            shift
+            ;;
+          zorin)
+            icon='-zorin'
+            shift
+            ;;
+          endeavouros)
+            icon='-endeavouros'
+            shift
+            ;;
+          tux)
+            icon='-tux'
+            shift
+            ;;
+          nixos)
+            icon='-nixos'
+            shift
+            ;;
+          gentoo)
+            icon='-gentoo'
+            shift
+            ;;
+          budgie)
+            icon='-budgie'
+            shift
+            ;;
+          solus)
+            icon='-solus'
+            shift
+            ;;
+          -*)
+            break
+            ;;
+          *)
+            echo "ERROR: Unrecognized icon variant '$1'."
+            echo "Try '$0 --help' for more information."
+            exit 1
+            ;;
+        esac
+        echo "Install $icons icon for gnome-shell panel..."
+      done
+      ;;
     -h|--help)
       usage
       exit 0
@@ -311,18 +427,6 @@ if [[ "${#sizes[@]}" -eq 0 ]] ; then
   sizes=("${SIZE_VARIANTS[@]}")
 fi
 
-if [[ "${#othemes[@]}" -eq 0 ]] ; then
-  othemes=("${OLD_THEME_VARIANTS[@]}")
-fi
-
-if [[ "${#ocolors[@]}" -eq 0 ]] ; then
-  ocolors=("${OLD_COLOR_VARIANTS[@]}")
-fi
-
-if [[ "${#osizes[@]}" -eq 0 ]] ; then
-  osizes=("${OLD_SIZE_VARIANTS[@]}")
-fi
-
 if [[ "${#lcolors[@]}" -eq 0 ]] ; then
   lcolors=("${COLOR_VARIANTS[1]}")
 fi
@@ -335,18 +439,21 @@ if [[ ${remove} == 'true' ]]; then
   else
     uninstall_theme
   fi
-elif [[ "$dockfix" == 'true' ]]; then
-  fix_dash_to_dock
 else
   if [[ "$libadwaita" == 'true' && "$UID" == "$ROOT_UID" ]]; then
     echo -e "Do not run -l with sudo, that will link libadwaita theme to root folder !"
     exit 0
   fi
 
+  clean_theme
   install_theme
 
   if [[ "$libadwaita" == 'true' && "$UID" != "$ROOT_UID" ]]; then
     link_theme
+  fi
+
+  if [[ "$dockfix" == 'true' ]]; then
+    fix_dash_to_dock
   fi
 fi
 

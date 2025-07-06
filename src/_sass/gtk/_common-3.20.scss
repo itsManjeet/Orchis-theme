@@ -105,22 +105,22 @@
 *:disabled { -gtk-icon-effect: dim; }
 
 .gtkstyle-fallback {
-  background-color: $background;
-  color: $text;
+  background-color: $titlebar;
+  color: $titlebar-text;
 
   &:hover {
-    background-color: darken($background, 5%);
-    color: $text;
+    background-color: darken($titlebar, 5%);
+    color: $titlebar-text;
   }
 
   &:active {
-    background-color: darken($background, 10%);
-    color: $text;
+    background-color: darken($titlebar, 10%);
+    color: $titlebar-text;
   }
 
   &:disabled {
-    background-color: $background;
-    color: $text-disabled;
+    background-color: $titlebar-backdrop;
+    color: $titlebar-text-disabled;
   }
 
   &:selected {
@@ -148,13 +148,13 @@
   .background.csd &:selected { @extend %selected_items_color; }
 }
 
-widget.view {
-  // border-radius: $corner-radius;
+// widget.view {
+//   border-radius: $corner-radius;
 
-  &:selected {
-    @extend %selected_items_primary;
-  }
-}
+//   &:selected {
+//     @extend %selected_items_primary;
+//   }
+// }
 
 textview {
   text {
@@ -496,7 +496,7 @@ button {
   min-width: 16px;
   padding: ($medium-size - 24px) / 2 ($medium-size - 16px) / 2;
   border-radius: $corner-radius;
-  font-weight: 500;
+  // font-weight: 500;
   @extend %button-basic;
 
   &:drop(active) { @include button(hover); }
@@ -1086,7 +1086,7 @@ searchbar > revealer > box {
   @extend %button-flat;
   color: $titlebar-text-secondary;
 
-  .linked:not(.vertical) > & {
+  .linked:not(.vertical):not(.path-bar) > & {
     border-radius: $circular-radius;
   }
 
@@ -1180,6 +1180,10 @@ searchbar > revealer > box {
     background-color: $titlebar-divider;
   }
 
+  button:not(.suggested-action):not(.destructive-action) {
+    @extend %titlebar-button;
+  }
+
   entry { @extend %titlebar-entry; }
 
   .linked:not(.vertical) > entry {
@@ -1214,10 +1218,19 @@ searchbar > revealer > box {
   }
 
   // FIXME: Ugly overriding
-  .path-bar button:not(.suggested-action):not(.destructive-action).text-button {
-    min-width: 0;
-    padding-left: ($medium-size - 24px) / 2;
-    padding-right: ($medium-size - 24px) / 2;
+  .path-bar button:not(.suggested-action):not(.destructive-action) {
+    color: $titlebar-text-secondary;
+    border-radius: 3px;
+
+    &.text-button {
+      min-width: 0;
+      padding-left: ($medium-size - 24px) / 2;
+      padding-right: ($medium-size - 24px) / 2;
+    }
+  
+    &:focus, &:hover, &:active, &:checked { color: $titlebar-text; }
+  
+    &:disabled { color: $titlebar-text-secondary-disabled; }
   }
 
   &.selection-mode {
@@ -1357,10 +1370,6 @@ headerbar {
     margin-bottom: $space-size;
   }
 
-  button:not(.suggested-action):not(.destructive-action) {
-    @extend %titlebar-button;
-  }
-
   separator.titlebutton {
     margin-top: $large-size / 4;
     margin-bottom: $large-size / 4;
@@ -1419,6 +1428,34 @@ headerbar {
           padding: 0;
           border-radius: 0;
         }
+      }
+    }
+  }
+}
+
+window.background.csd {
+  > widget > headerbar:not(.titlebar) {
+    min-height: $medium-size;
+    border: none;
+    box-shadow: none;
+
+    @if $mac_style == 'true' {
+      padding: 0 $space-size * 2;
+    } @else {
+      padding: 0 $space-size / 2;
+    }
+
+    button.titlebutton {
+      padding: 0;
+
+      @if $mac_style == 'true' {
+        min-height: 16px;
+        min-width: 16px;
+        margin: 0 $space-size - 2px;
+      } @else {
+        min-height: $small-size;
+        min-width: $small-size;
+        margin: 0 $space-size / 2;
       }
     }
   }
@@ -1582,10 +1619,9 @@ headerbar {
     &, &:disabled { background-color: transparent; }
   }
 
-  label:not(:only-child) {
-    &:first-child { margin-left: 0; }
-
-    &:last-child { margin-right: 0; }
+  label, image {
+    margin-left: 2px;
+    margin-right: 2px;
   }
 
   &.text-button {
@@ -1725,6 +1761,13 @@ menubar,
   &:backdrop {
     background-color: $titlebar-backdrop;
     color: $titlebar-text-secondary;
+  }
+
+  headerbar & {
+    &, &:backdrop {
+      background-color: transparent;
+      box-shadow: none;
+    }
   }
 
   > menuitem {
@@ -1907,10 +1950,17 @@ popover.background {
     background-color: transparent;
   }
 
-  // FIXME: Use the popover color instead of transparent as a workaround for .view
-  list,
-  .view:not(:selected),
-  toolbar { background-color: $surface; }
+  > list > row {
+    &:first-child {
+      border-top-left-radius: $menu-radius;
+      border-top-right-radius: $menu-radius;
+    }
+
+    &:last-child {
+      border-bottom-left-radius: $menu-radius;
+      border-bottom-right-radius: $menu-radius;
+    }
+  }
 
   button, entry, spinbutton {
     border-radius: $menuitem-radius;
@@ -1957,7 +2007,7 @@ popover.background {
   outline: none;
   background-clip: padding-box;
   color: $text-secondary;
-  font-weight: 500;
+  // font-weight: 500;
 
   &:hover {
     background-color: $fill;

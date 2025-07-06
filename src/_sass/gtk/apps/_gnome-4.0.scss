@@ -86,10 +86,6 @@
     }
   
     .content-pane {
-      &, &:backdrop {
-        background-color: transparent;
-      }
-
       headerbar {
         &, &:backdrop {
           box-shadow: inset 0 1px highlight($titlebar);
@@ -127,7 +123,16 @@
               }
             }
           }
+
+          entry { @extend %titlebar-entry-reset; }
         }
+      }
+
+      .toolbar {
+        color: $text;
+        background-color: $base;
+        border-radius: $window-radius - $space-size;
+        margin: 0 $space-size $space-size 0;
       }
     }
 
@@ -165,6 +170,8 @@
         border-left: none;
       }
     }
+
+    .toolbar { margin: 0 0 $space-size * 2 $space-size; }
   }
 
   flap.unfolded > placessidebar,
@@ -176,7 +183,7 @@
     > scrolledwindow {
       margin: 0 0 $space-size * 2 $space-size * 2;
       border-radius: $window-radius - $space-size;
-      background-color: if($topbar == 'dark' and $variant == 'light', transparent, rgba($primary, 0.08));
+      background-color: if($topbar == 'dark' and $variant == 'light', transparent, rgba(theme($theme), 0.08));
 
       > overshoot, > undershoot {
         &.top { border-radius: $window-radius - $space-size $window-radius - $space-size 0 0; }
@@ -385,6 +392,7 @@
       }
     }
 
+    .nautilus-network-view,
     .nautilus-list-view {
       color: $text;
       background-color: $base;
@@ -415,6 +423,12 @@
     }
   }
 
+  .nautilus-list-view {
+    #NautilusViewCell {
+      padding: 0;
+    }
+  }
+
   infobar {
     margin: $space-size / 2;
 
@@ -428,21 +442,31 @@
     border-radius: $space-size;
   }
 
-  .floating-bar {
-    min-height: $menuitem-size;
-    padding: $space-size / 2;
-    margin: if($variant == 'light' and $topbar == 'dark', $space-size * 2, $space-size);
-    border: none;
-    border-radius: $circular-radius;
-    background-color: rgba($background, 0.95);
-    box-shadow: none;
-    color: $text;
-
-    button {
-      margin: (32px - $small-size) / 2;
-
-      @extend %small-button;
+  #NautilusPathBar {
+    background-color: $titlebar-fill;
+  
+    #NautilusPathButton {
+      &.current-dir {
+        color: $titlebar-text;
+      }
     }
+  }
+}
+
+.floating-bar {
+  min-height: $menuitem-size;
+  padding: $space-size / 2;
+  margin: if($variant == 'light' and $topbar == 'dark', $space-size * 2, $space-size);
+  border: none;
+  border-radius: $circular-radius;
+  background-color: rgba($background, 0.95);
+  box-shadow: none;
+  color: $text;
+
+  button {
+    margin: (32px - $small-size) / 2;
+
+    @extend %small-button;
   }
 }
 
@@ -460,24 +484,22 @@
   > menubutton > button.image-button {
     min-width: $menuitem-size;
     min-height: $menuitem-size;
-    margin: ($medium-size - $menuitem-size) / 2 0;
     padding: 0;
   }
 
-  > text { margin: 0; }
+  > * { margin: ($medium-size - $menuitem-size) / 2 0; }
 }
 
 #NautilusPathBar {
-  background-color: $titlebar-fill;
+  background-color: $fill;
   border-radius: $circular-radius;
-  margin: $space-size 0;
 
   #NautilusPathButton {
     margin: 0 $space-size / 2;
     border-radius: $circular-radius;
 
     &.current-dir {
-      color: $titlebar-text;
+      color: $text;
 
       &:hover, &:active {
         background: none;
@@ -501,6 +523,12 @@
    padding: 0;
    min-height: $small-size - 2px;
    min-width: $small-size - 2px;
+  }
+}
+
+#NautilusFileChooser {
+  .content-pane {
+    background-color: $base;
   }
 }
 
@@ -566,6 +594,18 @@ window > widget {
     > box > scrolledwindow > viewport > widget > stack {
       background-color: $base;
     }
+  }
+}
+
+//
+// Gnome Tweaks
+//
+
+.tweak-titlebar-left + separator {
+  background-color: $titlebar;
+
+  &:backdrop {
+    background-color: $titlebar-backdrop;
   }
 }
 
@@ -823,26 +863,30 @@ event {
     margin: 4px;
   }
 
+  weekgrid > & {
+    margin: 5px 4px 0 3px;
+  }
+
   &.timed,
   &:not(.slanted):not(.slanted-start):not(.slanted-end) {
-    border-radius: $corner-radius;
+    border-radius: $menuitem-radius;
   }
 
   &.timed widget.edge {
-    border-radius: $corner-radius / 2;
+    border-radius: $menuitem-radius;
     min-width: 5px;
   }
 
   &.slanted-start,
   &.slanted-end:dir(rtl) {
     padding-left: $space-size * 2 + 4px;
-    border-radius: 0 $corner-radius / 2 $corner-radius / 2 0;
+    border-radius: 0 $menuitem-radius $menuitem-radius 0;
   }
 
   &.slanted-end,
   &.slanted-start:dir(rtl) {
     padding-right: $space-size * 2 + 4px;
-    border-radius: $corner-radius / 2 0 0 $corner-radius / 2;
+    border-radius: $menuitem-radius 0 0 $menuitem-radius;
   }
 
   &:not(.timed).color-dark {
@@ -850,12 +894,14 @@ event {
     outline-color: rgba(0, 0, 0, 0.3);
   }
 
-  &.timed,
   &:not(.timed).color-light {
     color: gtkalpha(black, 0.75);
     outline-color: rgba(255, 255, 255, 0.5);
   }
 
+  &.timed {
+    color: $text-secondary;
+  }
 }
 
 // Event Popover
@@ -956,10 +1002,10 @@ datechooser {
 
     &:selected, &.today:selected {
       background-color: $primary;
-      color: on($primary);
+      color: $primary-text;
       font-weight: bold;
 
-      dot { background-color: on($primary); }
+      dot { background-color: $primary-text; }
     }
 
     &.today {
@@ -971,9 +1017,9 @@ datechooser {
     &.other-month {
       &:not(:hover),
       &:backdrop {
-        color: gtkalpha(currentColor, 0.1);
+        color: $text-secondary-disabled;
 
-        dot { background-color: gtkalpha(currentColor, 0.1); }
+        dot { background-color: $text-secondary-disabled; }
       }
     }
   }
@@ -1348,20 +1394,20 @@ screenshot-carousel box.frame.view {
   color: #1c71d8;
   background-color:#fdf8d7;
   background-image: linear-gradient($border 1px, transparent 1px),
-           linear-gradient(90deg, $border 1px, transparent 1px);
+                    linear-gradient(90deg, $border 1px, transparent 1px);
   background-size: 10px 10px, 10px 10px;
   background-position: -1px -4px, center -1px;
 
   &:hover {
     background-color: lighten(#fdf8d7, 5%);
     background-image: linear-gradient($border 1px, transparent 1px),
-             linear-gradient(90deg, $border 1px, transparent 1px);
+                      linear-gradient(90deg, $border 1px, transparent 1px);
   }
 
   &:active {
     background-color: darken(#fdf8d7, 5%);
     background-image: linear-gradient($border 1px, transparent 1px),
-             linear-gradient(90deg, $border 1px, transparent 1px);
+                      linear-gradient(90deg, $border 1px, transparent 1px);
   }
 }
 
@@ -1506,7 +1552,7 @@ image.circular {
 
     > row.activatable:selected {
       background-color: $primary;
-      color: on($primary);
+      color: $primary-text;
     }
   }
 
@@ -1661,6 +1707,16 @@ window.dialog {
 }
 
 //
+// Extensions
+//
+
+popover.details-popover {
+  > contents {
+    padding: $space-size * 2;
+  }
+}
+
+//
 // Rnote
 //
 
@@ -1672,27 +1728,348 @@ button.colorpad {
   padding: 0px;
   margin: 0px;
   background-blend-mode: screen;
-  background-image:
-      linear-gradient(45deg, #0f0f0f55 25%, transparent 25%, transparent 75%, #0f0f0f55 75%, #0f0f0f55),
-      linear-gradient(45deg, #0f0f0f55 25%, transparent 25%, transparent 75%, #0f0f0f55 75%, #0f0f0f55);
+  background-image: linear-gradient(45deg, #0f0f0f55 25%, transparent 25%, transparent 75%, #0f0f0f55 75%, #0f0f0f55),
+                    linear-gradient(45deg, #0f0f0f55 25%, transparent 25%, transparent 75%, #0f0f0f55 75%, #0f0f0f55);
   background-color: gtkcolor(colorpad_color);
   color:  gtkcolor(colorpad_fg_color);
   background-size: 18px 18px;
   background-position: 0px 0px, 9px 9px;
 
   &:hover {
-      filter: brightness(93%);
+    filter: brightness(93%);
   }
 
   &:active {
-      filter: brightness(86%);
+    filter: brightness(86%);
   }
 
   &:checked {
-      filter: brightness(100%);
+    filter: brightness(100%);
   }
 }
 
 window#desktopwindow {
   background: none;
+}
+
+// ThemeSelector
+themeselector, // Gnome text editor
+panelthemeselector { // Gnome builder
+  margin: $space-size * 1.5;
+
+  checkbutton {
+    padding: 0;
+    min-height: 44px;
+    min-width: 44px;
+    padding: 1px;
+    background-clip: content-box;
+    border-radius: $circular-radius;
+    box-shadow: inset 0 0 0 1px $border;
+
+    &.follow:checked,
+    &.light:checked,
+    &.dark:checked {
+      box-shadow: inset 0 0 0 2px $primary;
+    }
+
+    &.follow {
+      background-image: linear-gradient(to bottom right, #ffffff 50%, #202020 50%);
+    }
+
+    &.light {
+      background-color: #ffffff;
+    }
+
+    &.dark {
+      background-color: #202020;
+    }
+
+    &.theme-selector radio {
+      -gtk-icon-source: none;
+      border: none;
+      background: none;
+      box-shadow: none;
+      min-height: 20px;
+      min-width: 20px;
+      padding: 0;
+      margin: 0;
+
+      &:hover, &:active, &:checked {
+        background-color: transparent;
+        background-image: none;
+      }
+
+      &:checked {
+        -gtk-icon-size: 20px;
+        -gtk-icon-source: -gtk-scaled(-gtk-recolor(url("assets/scalable/select-symbolic.svg")), -gtk-recolor(url("assets/scalable/select-symbolic@2.svg")));
+        color: $primary-text;
+        background-color: $primary;
+
+        &, &:hover, &:active {
+          box-shadow: 0 2px 3px -1px rgba(black, 0.08), 0 1px 2px 0 rgba(black, 0.1);
+        }
+      }
+    }
+  }
+}
+
+themeswitcher { // Gnome console
+  padding: $space-size;
+
+  .check {
+    min-height: 20px;
+    min-width: 20px;
+    background: none;
+    padding: 0;
+    margin: 0;
+    border-radius: $circular-radius;
+    color: $primary-text;
+    background-color: $primary;
+
+    &, &:hover, &:active {
+      box-shadow: 0 2px 3px -1px rgba(black, 0.08), 0 1px 2px 0 rgba(black, 0.1);
+    }
+  }
+
+  checkbutton {
+    padding: 0;
+    min-height: 44px;
+    min-width: 44px;
+    padding: 1px;
+    background-clip: content-box;
+    border-radius: $circular-radius;
+    box-shadow: inset 0 0 0 1px $border;
+
+    &:checked {
+      box-shadow: inset 0 0 0 2px $primary;
+    }
+
+    radio {
+      &, &:hover, &:active, &:checked, &:checked:hover, &:checked:active {
+        background-color: transparent;
+        border: none;
+        background: none;
+        box-shadow: none;
+        color: transparent;
+        -gtk-icon-source: none;
+        -gtk-icon-size: 0;
+      }
+    }
+
+    &.system {
+      background: linear-gradient(-45deg, #1e1e1e 50%, white 50%);
+    }
+
+    &.light {
+      color: gtkalpha(black, .8);
+      background-color: white;
+    }
+
+    &.dark {
+      color: white;
+      background-color: #1e1e1e;
+    }
+  }
+}
+
+// Sticky note
+styleselector {
+  checkbutton {
+    padding: 0;
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0;
+    background-clip: content-box;
+    border-radius: $circular-radius;
+    box-shadow: inset 0 0 0 1px $border;
+
+    &:hover {
+      box-shadow: inset 0 0 0 2px $border;
+    }
+
+    &:checked {
+      box-shadow: inset 0 0 0 2px $primary;
+    }
+
+    > radio {
+      min-height: 20px;
+      min-width: 20px;
+      padding: 0;
+      margin: 0;
+
+      &, &:hover, &:focus, &:not(:focus) {
+        color: transparent;
+        border: none;
+        background: none;
+        box-shadow: none;
+        -gtk-icon-source: none;
+        -gtk-icon-size: 0;
+      }
+
+      &:checked, &:active {
+        &, &:hover, &:focus, &:not(:focus) {
+          -gtk-icon-size: 20px;
+          -gtk-icon-source: -gtk-scaled(-gtk-recolor(url("assets/scalable/select-symbolic.svg")), -gtk-recolor(url("assets/scalable/select-symbolic@2.svg")));
+          color: $primary-text;
+          background-color: $primary;
+          box-shadow: 0 2px 3px -1px rgba(black, 0.08), 0 1px 2px 0 rgba(black, 0.1);
+        }
+      }
+    }
+  }
+}
+
+.note-window {
+  headerbar {
+    &, &:backdrop {
+      box-shadow: none;
+    }
+  }
+
+  &.style-yellow {
+    &, .text-view.view, .text-view.view > text, headerbar {
+      background-color: $yellow-light;
+      color: on($yellow-light);
+    }
+
+    * { color: on($yellow-light); }
+
+    .text-view.view > text > selection {
+      background-color: on($yellow-light, track);
+    }
+
+    popover {
+      > arrow,
+      > contents {
+        background-color: lighten($yellow-light, 10%);
+        color: on($yellow-light);
+      }
+    }
+  }
+
+  &.style-pink {
+    &, .text-view.view, .text-view.view > text, headerbar {
+      background-color: $pink-light;
+      color: on($pink-light);
+    }
+
+    * { color: on($pink-light); }
+
+    .text-view.view > text > selection {
+      background-color: on($pink-light, track);
+    }
+
+    popover {
+      > arrow,
+      > contents {
+        background-color: lighten($pink-light, 10%);
+        color: on($pink-light);
+      }
+    }
+  }
+
+  &.style-green {
+    &, .text-view.view, .text-view.view > text, headerbar {
+      background-color: $green-light;
+      color: on($green-light);
+    }
+
+    * { color: on($green-light); }
+
+    .text-view.view > text > selection {
+      background-color: on($green-light, track);
+    }
+
+    popover {
+      > arrow,
+      > contents {
+        background-color: lighten($green-light, 10%);
+        color: on($green-light);
+      }
+    }
+  }
+
+  &.style-purple {
+    &, .text-view.view, .text-view.view > text, headerbar {
+      background-color: $purple-light;
+      color: on($purple-light);
+    }
+
+    * { color: on($purple-light); }
+
+    .text-view.view > text > selection {
+      background-color: on($purple-light, track);
+    }
+
+    popover {
+      > arrow,
+      > contents {
+        background-color: lighten($purple-light, 10%);
+        color: on($purple-light);
+      }
+    }
+  }
+
+  &.style-blue {
+    &, .text-view.view, .text-view.view > text, headerbar {
+      background-color: $blue-light;
+      color: on($blue-light);
+    }
+
+    * { color: on($blue-light); }
+
+    .text-view.view > text > selection {
+      background-color: on($blue-light, track);
+    }
+
+    popover {
+      > arrow,
+      > contents {
+        background-color: lighten($blue-light, 10%);
+        color: on($blue-light);
+      }
+    }
+  }
+
+  &.style-gray {
+    &, .text-view.view, .text-view.view > text, headerbar {
+      background-color: $grey-500;
+      color: on($grey-500);
+    }
+
+    * { color: on($grey-500); }
+
+    .text-view.view > text > selection {
+      background-color: on($grey-500, track);
+    }
+
+    popover {
+      > arrow,
+      > contents {
+        background-color: lighten($grey-500, 10%);
+        color: on($grey-500);
+      }
+    }
+  }
+
+  &.style-charcoal {
+    &, .text-view.view, .text-view.view > text, headerbar {
+      background-color: #333333;
+      color: white;
+    }
+
+    * { color: white; }
+
+    .text-view.view > text > selection {
+      background-color: on(#333333, track);
+    }
+
+    popover {
+      > arrow,
+      > contents {
+        background-color: #444444;
+        color: white;
+      }
+    }
+  }
 }
