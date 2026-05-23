@@ -20,8 +20,8 @@ for theme in '' '-Purple' '-Pink' '-Red' '-Orange' '-Yellow' '-Green' '-Teal' '-
         theme_color_light='#F44336'
         ;;
       -Orange)
-        theme_color_dark='#F57C00'
-        theme_color_light='#FB8C00'
+        theme_color_dark='#D97706'
+        theme_color_light='#F08A00'
         ;;
       -Yellow)
         theme_color_dark='#FBC02D'

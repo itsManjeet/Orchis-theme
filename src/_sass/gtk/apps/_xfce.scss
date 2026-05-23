@@ -15,28 +15,39 @@
 .xfce4-panel.background {
   border: none; // Sadly the border is hard-coded
   border-color: transparent;
-  background-color: $panel;
-  color: on($panel, secondary);
+  background-color: if($variant == 'light', rgba($background, 0.9), rgba($panel-solid, 0.9));
+  color: if($variant == 'light', on($background, secondary), on($panel-solid, secondary));
   font-weight: 500;
+  box-shadow: inset 0 -1px if($variant == 'light', on($background, divider), on($panel-solid, divider));
 
   button, button.flat {
     @extend %button-flat;
     @extend %button-on-dark;
-    color: on($panel, secondary);
+    color: if($variant == 'light', on($background, secondary), on($panel-solid, secondary));
 
     min-height: 16px;
     min-width: 16px;
     padding: 0;
-    border-radius: 0;
+    border-radius: $menuitem-radius;
   }
 
   .tasklist button {
-    color: on($panel, secondary);
+    color: if($variant == 'light', on($background, secondary), on($panel-solid, secondary));
     border-image: image(transparent) 0 0 2 / 0 0 2px;
 
     &:checked { border-image: image($primary) 0 0 2 / 0 0 2px; }
 
     image { padding: 4px; }
+
+    &:hover {
+      background-color: if($variant == 'light', on($background, fill), on($panel-solid, fill));
+      color: if($variant == 'light', on($background), on($panel-solid));
+    }
+
+    &:checked {
+      background-color: if($variant == 'light', on($background, secondary-fill), on($panel-solid, secondary-fill));
+      color: if($variant == 'light', on($background), on($panel-solid));
+    }
   }
 
   // &.horizontal .tasklist button { margin: 0 1px; }
@@ -105,7 +116,7 @@ XfdesktopIconView.view {
 
 window#whiskermenu-window {
   border-radius: 0;
-  background-color: $popover;
+  background-color: transparent;
   border: none;
 
   entry.search {
@@ -117,15 +128,15 @@ window#whiskermenu-window {
   // Need to set Whisker menu background opacity less than 100
   > frame > border {
     border-radius: 12px; // Hardcoding whisker radius
-    padding: $space-size $space-size + 2px $space-size $space-size * 1.5;
-    margin: $space-size;
-    border: none;
-    background-color: if($opacity == 'solid', $popover, rgba($popover, 0.97));
-    box-shadow: $shadow-z4, inset 0 1px highlight($popover);
+    padding: $space-size * 1.5 $space-size * 1.5 $space-size * 1.5 $space-size * 2;
+    margin: $space-size * 1.5;
+    border: 1px solid $surface-border;
+    background-color: rgba($popover, 0.92);
+    box-shadow: $shadow-z8;
   }
 
   box.categories > button.radio { // sidebar categories button
-    padding: $space-size / 2 $space-size;
+    padding: $space-size $space-size;
     margin: 1px 0;
     border-radius: $menuitem-radius;
 
@@ -276,10 +287,10 @@ window.background.csd.thunar {
  ***************/
 
 dialog.xfsm-logout-dialog {
-  box-shadow: none;
-  border: none;
+  box-shadow: $shadow-z12;
+  border: 1px solid $surface-border;
   border-radius: $window-radius;
-  background-color: if($opacity == 'solid', $popover, rgba($popover, 0.97));
+  background-color: rgba($popover, 0.9);
 }
 
 
@@ -288,12 +299,12 @@ dialog.xfsm-logout-dialog {
  **********************/
 
 #XfceNotifyWindow {
-  box-shadow: none;
-  border: none;
+  box-shadow: $shadow-z8;
+  border: 1px solid rgba(white, 0.08);
   border-radius: $window-radius;
   color: on(dark, secondary);
-  background-color: rgba(black, 0.75);
-  padding: $space-size;
+  background-color: rgba(black, 0.68);
+  padding: $space-size * 1.5;
 
   buttonbox { padding: 0; }
 

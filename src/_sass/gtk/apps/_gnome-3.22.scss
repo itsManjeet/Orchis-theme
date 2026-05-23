@@ -511,7 +511,7 @@ dialog.background > box.dialog-vbox.vertical > grid.horizontal {
 window.org-gnome-gedit,
 window.background.csd {
   > paned.titlebar {
-    box-shadow: inset 0 -1px $divider, inset 0 1px highlight($titlebar);
+    box-shadow: none;
     background-color: $titlebar;
 
     &:backdrop {
@@ -1057,7 +1057,7 @@ window.background.csd.unified {
     > box.vertical > headerbar.titlebar.windowhandle {
       border-top-left-radius: $window-radius;
       border-top-right-radius: $window-radius;
-      box-shadow: inset 0 -1px $divider;
+      box-shadow: none;
 
       > viewswitchertitle > squeezer {
         margin: 0 0;
@@ -2198,7 +2198,7 @@ window.background {
 window.background.csd.unified {
   // Remove the sheen on headerbar...
   headerbar {
-    box-shadow: inset 0 -1px $divider;
+    box-shadow: none;
 
     &.selection-mode {
       box-shadow: none;
@@ -2207,7 +2207,7 @@ window.background.csd.unified {
 
   // ...and add it on the window itself
   > decoration-overlay {
-    box-shadow: inset 0 1px highlight($titlebar);
+    box-shadow: none;
   }
 
   &,

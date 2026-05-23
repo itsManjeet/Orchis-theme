@@ -44,8 +44,9 @@
     transition: outline-color $ripple-fade-out-duration $ease-out,
                 outline-width $ripple-fade-out-duration $ease-out,
                 outline-offset $ripple-fade-out-duration $ease-out;
-    outline: 0 solid transparent;
-    outline-offset: 4px;
+    outline: 1px solid $entry-border;
+    outline-offset: -1px;
+    box-shadow: $widget-shadow;
     background-color: $entry;
     color: if($fc == $primary, $text, $fc);
   }
@@ -53,8 +54,9 @@
   @if $t == hover {
     background-color: $overlay-hover;
     color: if($fc == $primary, $text, $fc);
-    outline: 2px solid $overlay-hover;
-    outline-offset: -2px;
+    outline: 1px solid $entry-border-hover;
+    outline-offset: -1px;
+    box-shadow: $widget-shadow;
   }
 
   @if $t == focus {
@@ -62,6 +64,8 @@
     color: if($fc == $primary, $text, $fc);
     outline: 2px solid if($fc == $primary, $track, $fc);
     outline-offset: -2px;
+    box-shadow: $widget-shadow,
+                0 0 0 3px rgba(if($fc == $primary, $primary, $fc), 0.24);
   }
 
   @if $t == checked {
@@ -70,12 +74,16 @@
     outline-color: if($fc == $primary, $primary, $fc);
     outline-width: 2px;
     outline-offset: -2px;
+    box-shadow: $widget-shadow,
+                0 0 0 3px rgba(if($fc == $primary, $primary, $fc), 0.24);
   }
 
   @if $t == disabled {
     background-color: $entry;
     color: if($fc == $primary, $text-disabled, rgba($fc, 0.35));
-    outline: none;
+    outline: 1px solid $entry-border-disabled;
+    outline-offset: -1px;
+    box-shadow: $widget-shadow;
     filter: none;
     opacity: 1;
   }
@@ -94,7 +102,8 @@
                 background-size 0,
                 background-image 0;
     outline: none;
-    box-shadow: inset 0 0 0 2px transparent;
+    box-shadow: $widget-shadow,
+                inset 0 0 0 1px $button-border;
     background-color: $button;
     background-image: radial-gradient(circle, transparent 0%, transparent 0%);
     background-repeat: no-repeat;
@@ -105,10 +114,14 @@
 
   @if $t == hover {
     background-color: $overlay-hover;
+    box-shadow: $widget-shadow,
+                inset 0 0 0 1px $button-border-hover;
   }
 
   @if $t == focus {
-    box-shadow: inset 0 0 0 2px $overlay-focus;
+    box-shadow: $widget-shadow,
+                0 0 0 3px rgba($primary, 0.24),
+                inset 0 0 0 2px $primary;
   }
 
   @if $t == active {
@@ -118,12 +131,15 @@
                 border 0ms;
     animation: ripple $ripple-fade-in-duration $ease-out forwards;
     background-color: $overlay-hover;
+    box-shadow: $widget-shadow,
+                inset 0 0 0 1px $button-border-hover;
     background-image: radial-gradient(circle, $overlay-active 10%, transparent 0%);
     background-size: 100% 100%;
   }
 
   @if $t == disabled {
-    box-shadow: none;
+    box-shadow: $widget-shadow,
+                inset 0 0 0 1px $button-border-disabled;
     background-color: $button;
     color: $text-disabled;
     filter: none;
@@ -131,13 +147,15 @@
   }
 
   @if $t == checked {
-    box-shadow: none;
+    box-shadow: $widget-shadow,
+                inset 0 0 0 1px rgba(black, 0.12);
     background-color: $primary;
     color: $primary-text;
   }
 
   @if $t == checked-hover {
-    box-shadow: inset 0 0 0 2px transparent;
+    box-shadow: $widget-shadow,
+                inset 0 0 0 2px transparent;
   }
 
   @if $t == checked-disabled {
@@ -150,7 +168,8 @@
                 background-size 0,
                 background-image 0;
     outline: none;
-    box-shadow: inset 0 0 0 2px transparent;
+    box-shadow: $widget-shadow,
+                inset 0 0 0 2px transparent;
     background-color: transparent;
     background-image: radial-gradient(circle, transparent 0%, transparent 0%);
     background-repeat: no-repeat;
@@ -165,7 +184,9 @@
   }
 
   @if $t == flat-focus {
-    box-shadow: inset 0 0 0 2px $overlay-focus;
+    box-shadow: $widget-shadow,
+                0 0 0 3px rgba($primary, 0.24),
+                inset 0 0 0 2px $primary;
     color: $text;
   }
 
@@ -187,6 +208,7 @@
   }
 
   @if $t == flat-checked {
+    box-shadow: $widget-shadow;
     background-color: $overlay-checked;
     color: $text;
   }

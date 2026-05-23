@@ -18,7 +18,7 @@ for theme in '' '-Purple' '-Pink' '-Red' '-Orange' '-Yellow' '-Green' '-Teal' '-
             theme_color='#E53935'
             ;;
           -Orange)
-            theme_color='#F57C00'
+            theme_color='#D97706'
             ;;
           -Yellow)
             theme_color='#FBC02D'
@@ -118,7 +118,7 @@ for theme in '' '-Purple' '-Pink' '-Red' '-Orange' '-Yellow' '-Green' '-Teal' '-
             theme_color='#F44336'
             ;;
           -Orange)
-            theme_color='#FB8C00'
+            theme_color='#F08A00'
             ;;
           -Yellow)
             theme_color='#FFD600'

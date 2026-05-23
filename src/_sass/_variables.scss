@@ -50,8 +50,8 @@ $circular-radius: 9999px;
 $panel-corner-radius: 0; // For gnome-shell
 
 // font families
-$font-family: "M+ 1c", Roboto, Cantarell, Sans-Serif;
-$large-font-family: Roboto, "M+ 1c", Cantarell, Sans-Serif;
+$font-family: Manrope, "Noto Sans Devanagari", "Noto Sans Tamil", "Noto Sans Bengali", "Noto Sans Gujarati", "Noto Sans Telugu", "Noto Sans Kannada", "Noto Sans Malayalam", "Noto Sans Gurmukhi", Cantarell, Sans-Serif;
+$large-font-family: Manrope, "Noto Sans Devanagari", "Noto Sans Tamil", "Noto Sans Bengali", "Noto Sans Gujarati", "Noto Sans Telugu", "Noto Sans Kannada", "Noto Sans Malayalam", "Noto Sans Gurmukhi", Cantarell, Sans-Serif;
 
 // font sizes
 $root-font-size: if($compact == 'false', 14px, 13px);
@@ -61,9 +61,9 @@ $subheading-size: if($compact == 'false', 16px, 15px);
 // Durations
 //
 
-$duration: 75ms;
-$shorter-duration: 100ms;
-$longer-duration: 150ms;
+$duration: 120ms;
+$shorter-duration: 120ms;
+$longer-duration: 180ms;
 $ripple-fade-in-duration: 225ms;
 $ripple-fade-out-duration: 300ms;
 $ripple-fade-out-opacity-duration: 1200ms;
@@ -96,42 +96,37 @@ $transition-shadow: box-shadow $duration $ease-out;
 
 // NOTE 2: Compared to rendering on the Web, GTK seems to have a bigger blur.
 
+$widget-shadow:
+  0 4px 5px -1px rgba(0, 0, 0, 0.18),
+  0 2px 4px -2px rgba(0, 0, 0, 0.16);
+
 $shadow-z1:
-  0 2px 2px -2px rgba(black, 0.3),
-  0 1px 2px -1px rgba(black, 0.24),
-  0 1px 2px -1px rgba(black, 0.17);
+  0 1px 2px rgba(20, 32, 48, 0.04),
+  0 8px 24px rgba(20, 32, 48, 0.04);
 $shadow-z2:
-  0 3px 2px -3px rgba(black, 0.3),
-  0 2px 2px -1px rgba(black, 0.24),
-  0 1px 3px 0 rgba(black, 0.12);
+  0 1px 2px rgba(20, 32, 48, 0.05),
+  0 12px 36px rgba(20, 32, 48, 0.05);
 $shadow-z3:
-  0 3px 3px -2px rgba(black, 0.2),
-  0 3px 3px 0 rgba(black, 0.14),
-  0 1px 5px 0 rgba(black, 0.12);
+  0 2px 4px rgba(20, 32, 48, 0.05),
+  0 18px 56px rgba(20, 32, 48, 0.055);
 $shadow-z4:
-  0 2px 2px -1px rgba(black, 0.2),
-  0 4px 4px 0 rgba(black, 0.14),
-  0 1px 6px 0 rgba(black, 0.12);
+  0 2px 6px rgba(20, 32, 48, 0.05),
+  0 18px 70px rgba(20, 32, 48, 0.055);
 $shadow-z6:
-  0 3px 3px -1px rgba(black, 0.2),
-  0 6px 6px 0 rgba(black, 0.14),
-  0 1px 11px 0 rgba(black, 0.12);
+  0 3px 8px rgba(20, 32, 48, 0.06),
+  0 22px 76px rgba(20, 32, 48, 0.06);
 $shadow-z8:
-  0 5px 5px -3px rgba(black, 0.2),
-  0 8px 8px 1px rgba(black, 0.14),
-  0 3px 9px 2px rgba(black, 0.12);
+  0 4px 10px rgba(20, 32, 48, 0.065),
+  0 28px 88px rgba(20, 32, 48, 0.065);
 $shadow-z12:
-  0 7px 7px -4px rgba(black, 0.2),
-  0 12px 12px 2px rgba(black, 0.14),
-  0 5px 13px 4px rgba(black, 0.12);
+  0 6px 14px rgba(20, 32, 48, 0.07),
+  0 32px 96px rgba(20, 32, 48, 0.07);
 $shadow-z16:
-  0 8px 6px -5px rgba(black, 0.2),
-  0 16px 16px 2px rgba(black, 0.14),
-  0 6px 18px 5px rgba(black, 0.12);
+  0 8px 18px rgba(20, 32, 48, 0.075),
+  0 40px 110px rgba(20, 32, 48, 0.075);
 $shadow-z24:
-  0 11px 11px -7px rgba(black, 0.2),
-  0 24px 24px 3px rgba(black, 0.14),
-  0 9px 28px 8px rgba(black, 0.12);
+  0 10px 24px rgba(20, 32, 48, 0.08),
+  0 48px 130px rgba(20, 32, 48, 0.08);
 
 $text-shadow:
   0 1px 1px rgba(black, 0.2),

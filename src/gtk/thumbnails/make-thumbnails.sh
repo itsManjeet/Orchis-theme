@@ -4,8 +4,8 @@ for theme in '' '-Purple' '-Pink' '-Red' '-Orange' '-Yellow' '-Green' '-Teal' '-
   for type in '' '-Nord' '-Dracula'; do
     case "$theme" in
       '')
-        theme_color_dark='#1A73E8'
-        theme_color_light='#3281EA'
+        theme_color_dark='#F08A00'
+        theme_color_light='#F08A00'
         ;;
       -Purple)
         theme_color_dark='#AB47BC'
@@ -20,8 +20,8 @@ for theme in '' '-Purple' '-Pink' '-Red' '-Orange' '-Yellow' '-Green' '-Teal' '-
         theme_color_light='#F44336'
         ;;
       -Orange)
-        theme_color_dark='#F57C00'
-        theme_color_light='#FB8C00'
+        theme_color_dark='#D97706'
+        theme_color_light='#F08A00'
         ;;
       -Yellow)
         theme_color_dark='#FBC02D'
@@ -130,15 +130,15 @@ for theme in '' '-Purple' '-Pink' '-Red' '-Orange' '-Yellow' '-Green' '-Teal' '-
     if [[ "$type" != '' ]]; then
       rm -rf "thumbnail${theme}${type}.svg"
       cp -rf "thumbnail.svg" "thumbnail${theme}${type}.svg"
-      sed -i "s/#1A73E8/${theme_color_dark}/g" "thumbnail${theme}${type}.svg"
-      sed -i "s/#3281EA/${theme_color_light}/g" "thumbnail${theme}${type}.svg"
+      sed -i "s/#F08A00/${theme_color_dark}/g" "thumbnail${theme}${type}.svg"
+      sed -i "s/#F08A00/${theme_color_light}/g" "thumbnail${theme}${type}.svg"
       sed -i "s/#f2f2f2/${background_light}/g" "thumbnail${theme}${type}.svg"
       sed -i "s/#2c2c2c/${background_dark}/g" "thumbnail${theme}${type}.svg"
     elif [[ "$theme" != '' ]]; then
       rm -rf "thumbnail${theme}.svg"
       cp -rf "thumbnail.svg" "thumbnail${theme}.svg"
-      sed -i "s/#1A73E8/${theme_color_dark}/g" "thumbnail${theme}.svg"
-      sed -i "s/#3281EA/${theme_color_light}/g" "thumbnail${theme}.svg"
+      sed -i "s/#F08A00/${theme_color_dark}/g" "thumbnail${theme}.svg"
+      sed -i "s/#F08A00/${theme_color_light}/g" "thumbnail${theme}.svg"
     fi
   done
 done

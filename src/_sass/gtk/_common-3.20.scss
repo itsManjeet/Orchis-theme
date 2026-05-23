@@ -622,12 +622,13 @@ button {
     &.#{$b_type} {
       background-color: $b_color;
       color: on($b_color);
-      box-shadow: none;
+      box-shadow: $widget-shadow;
 
       &:disabled { @include button(disabled); }
 
       &:hover {
-        box-shadow: inset 0 0 0 9999px transparent,
+        box-shadow: $widget-shadow,
+                    inset 0 0 0 9999px transparent,
                     0 2px (4px * .6) -1px rgba($b_color, 0.2),
                     0 4px (5px * .6) 0 rgba($b_color, 0.14),
                     0 1px (10px * .6) 0 rgba($b_color, 0.12);
@@ -636,13 +637,17 @@ button {
       &:checked { background-color: mix(on($b_color), $b_color, percentage(0.3)); }
 
       &:checked:hover {
-        box-shadow: inset 0 0 0 9999px transparent,
+        box-shadow: $widget-shadow,
+                    inset 0 0 0 9999px transparent,
                     0 3px 3px -3px rgba($b_color, 0.3),
                     0 2px 3px -1px rgba($b_color, 0.24),
                     0 2px 5px 0 rgba($b_color, 0.12);
       }
 
-      &:focus { box-shadow: 0 0 0 2px rgba($b_color, 0.35); }
+      &:focus {
+        box-shadow: $widget-shadow,
+                    0 0 0 2px rgba($b_color, 0.35);
+      }
 
       &.flat {
         background-color: transparent;
@@ -1137,16 +1142,16 @@ searchbar > revealer > box {
 .titlebar {
   transition: background-color $duration $ease-out, color $duration $ease-out;
   border-radius: $window-radius $window-radius 0 0;
-  box-shadow: inset 0 -1px $divider, inset 0 1px highlight($titlebar);
-  background-color: $titlebar;
-  color: $titlebar-text;
+  box-shadow: none;
+  background-color: $background;
+  color: $text;
   padding: 0 $space-size;
 
   &:disabled { color: $titlebar-text-disabled; }
 
   &:backdrop {
-    background-color: $titlebar-backdrop;
-    color: $titlebar-text-secondary;
+    background-color: $background;
+    color: $text-secondary;
 
     &:disabled { color: $titlebar-text-secondary-disabled; }
   }
@@ -1166,7 +1171,7 @@ searchbar > revealer > box {
     transition: color $duration $ease-out;
     color: $titlebar-text-secondary;
 
-    &:backdrop { color: $titlebar-text-disabled; }
+    &:backdrop { color: $text-disabled; }
   }
 
   // Don't draw titlebar above titlebar
@@ -1177,7 +1182,7 @@ searchbar > revealer > box {
 
   // The separator for split headerbars
   headerbar + separator {
-    background-color: $titlebar-divider;
+    background-color: transparent;
   }
 
   button:not(.suggested-action):not(.destructive-action) {
@@ -1219,7 +1224,7 @@ searchbar > revealer > box {
 
   // FIXME: Ugly overriding
   .path-bar button:not(.suggested-action):not(.destructive-action) {
-    color: $titlebar-text-secondary;
+    color: $text-secondary;
     border-radius: 3px;
 
     &.text-button {
@@ -1228,9 +1233,9 @@ searchbar > revealer > box {
       padding-right: ($medium-size - 24px) / 2;
     }
   
-    &:focus, &:hover, &:active, &:checked { color: $titlebar-text; }
+    &:focus, &:hover, &:active, &:checked { color: $text; }
   
-    &:disabled { color: $titlebar-text-secondary-disabled; }
+    &:disabled { color: $text-secondary-disabled; }
   }
 
   &.selection-mode {
@@ -1308,7 +1313,7 @@ searchbar > revealer > box {
 
   &.default-decoration {
     min-height: $medium-size;
-    box-shadow: inset 0 1px highlight($titlebar);
+    box-shadow: none;
     border-radius: $window-radius $window-radius 0 0;
     border: none;
 
@@ -1359,7 +1364,7 @@ headerbar {
   &:not(.titlebar) { box-shadow: none; }
 
   box.vertical & {
-    background-color: $titlebar;
+    background-color: $background;
   }
 
   // add vertical margins to common widget on the headerbar to avoid them spanning the whole height
@@ -1373,7 +1378,7 @@ headerbar {
   separator.titlebutton {
     margin-top: $large-size / 4;
     margin-bottom: $large-size / 4;
-    background-color: $titlebar-divider;
+    background-color: transparent;
   }
 
   switch {
@@ -1755,11 +1760,11 @@ menubar,
   -GtkWidget-window-dragging: true;
   padding: $space-size / 2;
   box-shadow: inset 0 -1px $titlebar-divider;
-  background-color: $titlebar;
+  background-color: $background;
   color: $titlebar-text;
 
   &:backdrop {
-    background-color: $titlebar-backdrop;
+    background-color: $background;
     color: $titlebar-text-secondary;
   }
 
@@ -1914,15 +1919,15 @@ menuitem {
 popover.background {
   transition: $transition-shadow;
   padding: 0;
-  box-shadow: $shadow-z4; // TODO: this should really have a highlight
+  box-shadow: $shadow-z4, inset 0 0 0 1px $surface-highlight;
   background-color: $surface;
 
   &:backdrop { box-shadow: $shadow-z2; }
 
   &, .csd & {
     border-style: solid;
-    border-width: 0;
-    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.0) rgba(0, 0, 0, 0.0);
+    border-width: 1px;
+    border-color: $surface-border;
     border-radius: $menu-radius;
   }
 
@@ -2002,7 +2007,7 @@ popover.background {
   min-width: $small-size;
   padding: $space-size 12px;
   border-width: 1px;
-  border-color: transparent;
+  border-color: $surface-border;
   border-style: solid;
   outline: none;
   background-clip: padding-box;
@@ -2020,7 +2025,7 @@ popover.background {
     transition: $transition;
     background-color: $base;
     background-clip: padding-box;
-    border-color: $solid-border;
+    border-color: $hairline-strong;
     color: $text;
 
     &:disabled { color: $text-disabled; }
@@ -2597,13 +2602,17 @@ radio {
   @extend %button-flat-simple;
   @extend %circular-button;
 
+  &, &:focus, &:hover, &:focus:hover, &:active, &:checked, &:checked:hover, &:indeterminate, &:disabled {
+    box-shadow: none;
+  }
+
   &:checked, &:indeterminate {
     color: $check_radio_primary;
 
     &:disabled { color: $text-secondary-disabled; }
   }
 
-  &:not(:hover):focus { box-shadow: inset 0 0 0 9999px transparent; }
+  &:not(:hover):focus { box-shadow: none; }
 
   // &:only-child { margin: -12px; }
 
@@ -3908,7 +3917,8 @@ colorchooser .popover.osd {
 decoration {
   border-radius: $window-radius;
   box-shadow: $shadow-z16, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent;
-  border: none;
+  border: 1px solid $csd-border;
+  background-color: transparent;
 
   // FIXME rationalize shadows
 
@@ -3921,6 +3931,7 @@ decoration {
     // The biggest shadow should be in the same order then in the active state
     // or the jumping will happen during the transition.
     box-shadow: $shadow-z4, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent;
+    border-color: $csd-border-backdrop;
     transition: $transition-shadow;
   }
 
@@ -3949,16 +3960,19 @@ decoration {
 
   .csd.popup & {
     border-radius: $menu-radius;
-    box-shadow: $shadow-z4;
+    box-shadow: $shadow-z4, inset 0 0 0 1px $surface-highlight;
+    border-color: $csd-border;
   }
 
   tooltip.csd & {
     border-radius: $corner-radius;
     box-shadow: none;
+    border-color: $csd-border;
   }
 
   messagedialog.csd & {
     border-radius: $window-radius;
+    border-color: $csd-border;
     // box-shadow: $shadow-z24, 0 24px (38px * .6) 3px transparent, 0 9px (46px * .6) 8px transparent;
 
     // &:backdrop { box-shadow: $shadow-z4, 0 24px (38px * .6) 3px transparent, 0 9px (46px * .6) 8px transparent; }
@@ -3969,7 +3983,6 @@ decoration {
     padding: 1px;
     border-radius: 0;
     box-shadow: none;
-    box-shadow: inset 0 1px highlight($titlebar);
     background-color: $titlebar;
 
     &:backdrop { background-color: $titlebar-backdrop; }

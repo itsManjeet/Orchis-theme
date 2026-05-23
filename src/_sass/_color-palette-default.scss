@@ -1,67 +1,70 @@
-// Default Theme Color Palette
+// Avyos Theme Color Palette
+//
+// Cool white surfaces, ink typography, and controlled saffron interaction
+// states based on avyos_design_language_guide.md.
 
 // Red
-$red-light: #F44336;
-$red-dark: #E53935;
+$red-light: #E23D28;
+$red-dark: #E23D28;
 
 // Pink
-$pink-light: #F06292;
-$pink-dark: #EC407A;
+$pink-light: #F6C27A;
+$pink-dark: #D97706;
 
 // Purple
-$purple-light: #BA68C8;
-$purple-dark: #AB47BC;
+$purple-light: #7C3AED;
+$purple-dark: #7C3AED;
 
 // Blue
-$blue-light: #3281EA;
-$blue-dark: #1A73E8;
+$blue-light: #F08A00;
+$blue-dark: #F08A00;
 
 // Teal
-$teal-light: #4DB6AC;
-$teal-dark: #009688;
+$teal-light: #007C89;
+$teal-dark: #007C89;
 
 // Green
-$green-light: #66BB6A;
-$green-dark: #4CAF50;
-$sea-light: #81C995;
-$sea-dark: #0F9D58;
+$green-light: #007C89;
+$green-dark: #007C89;
+$sea-light: #007C89;
+$sea-dark: #007C89;
 
 // Yellow
-$yellow-light: #FBC02D;
-$yellow-dark: #FFD600;
+$yellow-light: #F6C27A;
+$yellow-dark: #F08A00;
 
 // Orange
-$orange-light: #FB8C00;
-$orange-dark: #F57C00;
+$orange-light: #F08A00;
+$orange-dark: #D97706;
 
 // Grey
-$grey-050: #FAFAFA;
-$grey-100: #F2F2F2;
-$grey-150: #EEEEEE;
-$grey-200: #DDDDDD;
-$grey-250: #CCCCCC;
-$grey-300: #BFBFBF;
-$grey-350: #A0A0A0;
-$grey-400: #9E9E9E;
-$grey-450: #868686;
-$grey-500: #727272;
-$grey-550: #555555;
-$grey-600: #464646;
-$grey-650: #3C3C3C;
-$grey-700: #2C2C2C;
-$grey-750: #242424;
-$grey-800: #212121;
-$grey-850: #121212;
-$grey-900: #0F0F0F;
-$grey-950: #030303;
+$grey-050: #F7F8FA;
+$grey-100: #EEF2F6;
+$grey-150: #E7EDF3;
+$grey-200: #DDE3EA;
+$grey-250: #CDD6E1;
+$grey-300: #B8C2CE;
+$grey-350: #9BA6B4;
+$grey-400: #87919F;
+$grey-450: #68707D;
+$grey-500: #59616D;
+$grey-550: #49515C;
+$grey-600: #3A414B;
+$grey-650: #2E3540;
+$grey-700: #252B34;
+$grey-750: #1B2129;
+$grey-800: #141A22;
+$grey-850: #10151B;
+$grey-900: #0C1015;
+$grey-950: #08090B;
 
 // White
 $white: #FFFFFF;
 
 // Black
-$black: #000000;
+$black: #08090B;
 
 // Windows Button
-$button-close: #fd5f51;
-$button-max: #38c76a;
-$button-min: #fdbe04;
+$button-close: #E23D28;
+$button-max: #007C89;
+$button-min: #F08A00;

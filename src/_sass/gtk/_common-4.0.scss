@@ -598,7 +598,7 @@ button {
     &.#{$b_type} {
       background-color: $b_color;
       color: on($b_color);
-      box-shadow: none;
+      box-shadow: $widget-shadow;
 
       &:disabled {
         color: rgba(on($b_color), 0.45);
@@ -608,7 +608,7 @@ button {
       &:hover {
         color: on($b_color);
         background-color: mix(on($b_color), $b_color, percentage(0.1));
-        box-shadow: none;
+        box-shadow: $widget-shadow;
       }
 
       &:active {
@@ -618,7 +618,10 @@ button {
 
       &:checked { background-color: mix(on($b_color), $b_color, percentage(0.15)); }
 
-      &:focus { box-shadow: 0 0 0 2px rgba($b_color, 0.35); }
+      &:focus {
+        box-shadow: $widget-shadow,
+                    0 0 0 2px rgba($b_color, 0.35);
+      }
 
       &.flat {
         background-color: transparent;
@@ -1207,19 +1210,19 @@ searchbar > revealer > box {
 
 headerbar {
   transition: background-color $duration $ease-out, color $duration $ease-out;
-  box-shadow: inset 0 -1px $divider, inset 0 1px highlight($titlebar);
-  color: $titlebar-text;
+  box-shadow: none;
+  color: $text;
   min-height: $large-size;
   padding: 0;
   margin: 0;
-  background-color: $titlebar;
+  background-color: $background;
   border-radius: $window-radius $window-radius 0 0;
 
   &:disabled { color: $titlebar-text-disabled; }
 
   &:backdrop {
-    color: $titlebar-text-secondary;
-    background-color: $titlebar-backdrop;
+    color: $text-secondary;
+    background-color: $background;
     filter: none;
 
     > windowhandle {
@@ -1227,7 +1230,7 @@ headerbar {
       transition: none;
     }
 
-    &:disabled { color: $titlebar-text-secondary-disabled; }
+    &:disabled { color: $text-secondary-disabled; }
   }
 
   .info &,
@@ -1237,7 +1240,7 @@ headerbar {
 
     &, &:backdrop {
       background-color: transparent;
-      box-shadow: inset 0 1px highlight($titlebar);
+      box-shadow: none;
     }
 
     .subtitle,
@@ -1271,9 +1274,9 @@ headerbar {
   .subtitle,
   .dim-label {
     transition: color $duration $ease-out;
-    color: $titlebar-text-secondary;
+    color: $text-secondary;
 
-    &:backdrop { color: $titlebar-text-disabled; }
+    &:backdrop { color: $text-disabled; }
   }
 
   // Don't draw titlebar above titlebar
@@ -1469,16 +1472,16 @@ headerbar {
   .maximized &,
   .fullscreen & {
     border-radius: 0;
-    box-shadow: inset 0 -1px $divider;
+    box-shadow: none;
   }
 
   &.default-decoration {
     min-height: $small-size;
     padding: 0;
     background-image: none;
-    background-color: $titlebar;
+    background-color: $background;
     border-radius: $window-radius $window-radius 0 0;
-    box-shadow: inset 0 1px highlight($titlebar);
+    box-shadow: none;
 
     .tiled &,
     .maximized &,
@@ -1944,9 +1947,9 @@ popover.background {
   > contents {
     transition: $transition-shadow;
     padding: $space-size;
-    box-shadow: $shadow-z6; // TODO: this should really have a highlight
+    box-shadow: $shadow-z6, inset 0 0 0 1px $surface-highlight;
     background-color: $surface;
-    border: none;
+    border: 1px solid $surface-border;
     border-radius: $menu-radius;
     color: $text;
   }
@@ -2081,7 +2084,7 @@ magnifier {
   min-width: $small-size;
   padding: $space-size $space-size * 2;
   border-width: 1px;
-  border-color: transparent;
+  border-color: $surface-border;
   border-style: solid;
   outline: none;
   background-clip: padding-box;
@@ -2100,7 +2103,7 @@ magnifier {
     transition: $transition;
     background-color: $base;
     background-clip: padding-box;
-    border-color: $solid-border;
+    border-color: $hairline-strong;
     color: $text;
     box-shadow: none;
 
@@ -2583,6 +2586,10 @@ radio {
 
   @extend %button-flat-simple;
   @extend %circular-button;
+
+  &, &:focus, &:hover, &:focus:hover, &:active, &:checked, &:checked:hover, &:indeterminate, &:disabled {
+    box-shadow: none;
+  }
 
   &:checked, &:indeterminate {
     color: $check_radio_primary;
@@ -4701,10 +4708,12 @@ window {
     padding: 0;
     margin: 0;
     transition: none;
+    border: 1px solid $csd-border;
+    background-color: transparent;
     border-radius: $window-radius;
 
     @if $variant == 'light' and $topbar == 'dark' {
-      box-shadow: $shadow-z16, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent, inset 0 1px $titlebar;
+      box-shadow: $shadow-z16, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent;
     } @else {
       box-shadow: $shadow-z16, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent;
     }
@@ -4717,10 +4726,12 @@ window {
       transition: $transition-shadow;
 
       @if $variant == 'light' and $topbar == 'dark' {
-        box-shadow: $shadow-z4, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent, inset 0 1px $titlebar-backdrop;
+        box-shadow: $shadow-z4, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent;
       } @else {
         box-shadow: $shadow-z4, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent;
       }
+
+      border-color: $csd-border-backdrop;
     }
 
     // &.messagedialog { }
@@ -4747,6 +4758,7 @@ window {
     &.maximized,
     &.fullscreen {
       border-radius: 0;
+      border-color: transparent;
       outline: none;
       box-shadow: none;
       transition: none;

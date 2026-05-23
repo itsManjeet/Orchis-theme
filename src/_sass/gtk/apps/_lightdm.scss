@@ -9,7 +9,7 @@
   background-color: transparent;
   color: $white;
   box-shadow: none;
-  border-color: transparent;
+  border: none;
   // font-weight: bold;
 
   // the menubars/menus of the panel, i.e. indicators
@@ -28,8 +28,13 @@
 
   menubar > menuitem {
     color: on($scrim-alt, secondary);
+    padding: 4px 8px;
+    border-radius: $menuitem-radius;
 
-    &:hover { color: on($scrim-alt); }
+    &:hover {
+      color: on($scrim-alt);
+      background-color: transparent;
+    }
 
     &:disabled label { color: on($scrim-alt, secondary-disabled); }
   }
@@ -45,10 +50,15 @@
 #login_window,
 #shutdown_dialog,
 #restart_dialog {
-  margin: 0;
+  margin: $space-size * 2;
   border-radius: 20px;
-  box-shadow: none;
-  background-color: $surface;
+  border: none;
+  box-shadow:
+    0 18px 38px rgba(black, 0.42),
+    0 6px 16px rgba(black, 0.28),
+    inset 0 0 0 1px rgba(on($scrim, divider), 0.72),
+    inset 0 1px 0 rgba(white, 0.08);
+  background-color: rgba($surface, 0.74);
 
   menu {
     border-radius: 0;
@@ -59,7 +69,7 @@
 
 // the top half of the login-window, in GtkDialog terms, the content
 #content_frame {
-  padding-bottom: 28px - 12px; // take into account the hard-coded 12px margin_bottom
+  padding: $space-size * 2 $space-size * 2.5 $space-size * 1.5;
 }
 
 // #login_window {
@@ -91,10 +101,11 @@
 
 // the lower half of the login-window, in GtkDialog terms the buttonbox or action area
 #buttonbox_frame {
-  padding-top: 24px;
+  padding: $space-size * 1.5 $space-size * 2.5 $space-size * 2;
+  border-top: 1px solid transparent;
 
   > box,
-  > buttonbox { margin: -16px; }
+  > buttonbox { margin: 0; }
 
   button {
     @extend %button-flat;

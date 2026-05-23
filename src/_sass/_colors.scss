@@ -106,8 +106,8 @@
 
 $primary:                               theme($theme);
 $primary-fixed:                         theme($theme);
-$drop_target_color:                     $orange-dark;
-$background:                            if($variant == 'light', background(c), background(e));
+$drop_target_color:                     $primary;
+$background:                            if($variant == 'light', background(b), background(e));
 $surface:                               if($variant == 'light', background(a), background(h));
 $base:                                  if($variant == 'light', background(a), background(g));
 $base-alt:                              if($variant == 'light', background(b), background(f));
@@ -135,8 +135,8 @@ $panel-solid:                           if($topbar == 'dark', background(e), bac
 $panel:                                 if($opacity == 'default', rgba($panel-solid, 0.65), $panel-solid);
 $shell:                                 if($topbar == 'dark', rgba(black, 0.65), background(c)); // for gnome-shell
 
-$button:                                gtkalpha(currentColor, 0.05);
-$entry:                                 gtkalpha(currentColor, 0.05);
+$button:                                if($variant == 'light', $surface, gtkalpha(currentColor, 0.05));
+$entry:                                 if($variant == 'light', $surface, gtkalpha(currentColor, 0.05));
 
 //
 // Misc colors
@@ -145,7 +145,7 @@ $entry:                                 gtkalpha(currentColor, 0.05);
 $link:                                  $primary;
 $link-visited:                          if($variant == 'light', $purple-dark, $purple-light);
 
-$warning:                               if($variant == 'light', $yellow-dark, $yellow-light);
+$warning:                               if($variant == 'light', $orange-dark, $yellow-light);
 $error:                                 if($variant == 'light', $red-dark, $red-light);
 $success:                               if($variant == 'light', $sea-dark, $sea-light);
 
@@ -154,23 +154,36 @@ $destructive:                           $error;
 
 $check_radio_primary:                   if($check_radio == 'default', $success, $primary);
 
-$frame:                                 if($variant == 'light', rgba(black, 0.1), rgba(black, 0.25)); // instead of shadows
-$border:                                if($variant == 'light', rgba(black, 0.12), rgba(white, 0.12));
+$frame:                                 if($variant == 'light', rgba($grey-600, 0.14), rgba(black, 0.25)); // instead of shadows
+$border:                                if($variant == 'light', $grey-200, rgba(white, 0.12));
 $solid-border:                          if($variant == 'light', darken($background, 8%), lighten($background, 12%));
-$border-alt:                            rgba(black, 0.16); // darker border color for Chrome and Firefox
+$border-alt:                            if($variant == 'light', $grey-250, rgba(black, 0.16)); // darker border color for Chrome and Firefox
 $titlebar-indicator:                    if($topbar == 'dark', currentColor, $primary);
+$hairline:                              if($variant == 'light', rgba($grey-600, 0.08), rgba(white, 0.08));
+$hairline-strong:                       if($variant == 'light', rgba($grey-600, 0.14), rgba(white, 0.14));
+$button-border:                         if($variant == 'light', rgba($grey-600, 0.08), rgba(white, 0.07));
+$button-border-hover:                   if($variant == 'light', rgba($grey-600, 0.14), rgba(white, 0.12));
+$button-border-disabled:                if($variant == 'light', rgba($grey-600, 0.05), rgba(white, 0.04));
+$entry-border:                          if($variant == 'light', $grey-200, rgba(white, 0.10));
+$entry-border-hover:                    if($variant == 'light', $grey-250, rgba(white, 0.15));
+$entry-border-disabled:                 if($variant == 'light', rgba($grey-600, 0.06), rgba(white, 0.05));
+$surface-border:                        if($variant == 'light', $grey-200, rgba(white, 0.09));
+$csd-border:                            if($variant == 'light', rgba($grey-600, 0.28), rgba(white, 0.18));
+$csd-border-backdrop:                   if($variant == 'light', rgba($grey-600, 0.16), rgba(white, 0.10));
+$titlebar-border:                       if($topbar == 'dark', rgba(white, 0.08), $grey-200);
+$surface-highlight:                     if($variant == 'light', rgba(white, 0.55), rgba(white, 0.04));
 
 //
 // Overlay state colors
 //
 
 $overlay-normal:                        gtkalpha(currentColor, 0.05);
-$overlay-hover:                         gtkalpha(currentColor, 0.08);
-$overlay-focus:                         gtkalpha(currentColor, 0.08);
-$overlay-focus-hover:                   gtkalpha(currentColor, 0.16);
-$overlay-active:                        gtkalpha(currentColor, 0.12);
-$overlay-checked:                       gtkalpha(currentColor, 0.10);
-$overlay-selected:                      gtkalpha(currentColor, 0.06);
+$overlay-hover:                         if($variant == 'light', rgba($primary, 0.08), gtkalpha(currentColor, 0.08));
+$overlay-focus:                         if($variant == 'light', rgba($primary, 0.12), gtkalpha(currentColor, 0.08));
+$overlay-focus-hover:                   if($variant == 'light', rgba($primary, 0.16), gtkalpha(currentColor, 0.16));
+$overlay-active:                        if($variant == 'light', rgba($primary, 0.14), gtkalpha(currentColor, 0.12));
+$overlay-checked:                       if($variant == 'light', rgba($primary, 0.10), gtkalpha(currentColor, 0.10));
+$overlay-selected:                      if($variant == 'light', rgba($primary, 0.06), gtkalpha(currentColor, 0.06));
 
 //
 // Text and derivative colors

@@ -58,12 +58,12 @@
      rx="7"
      ry="7"
      id="rect7"
-     style="opacity:0.35;fill:#FB8C00" />
+     style="opacity:0.35;fill:#F08A00" />
   <circle
      cx="31"
      cy="13"
      r="10"
-     fill="#F57C00"
+     fill="#D97706"
      id="circle376"
      style="opacity:0.25;fill:#000000;fill-opacity:1;stroke-width:1;filter:url(#filter932)" />
   <circle
@@ -71,5 +71,5 @@
      cy="12"
      r="10"
      id="circle14"
-     style="fill:#FB8C00;fill-opacity:1;stroke-width:1" />
+     style="fill:#F08A00;fill-opacity:1;stroke-width:1" />
 </svg>
